@@ -194,6 +194,7 @@ fun TextReasoningScreen(
                         onClick = {
                             if (userQuestion.isNotBlank()) {
                                 onReasonClicked(userQuestion, imageUris.toList())
+                                userQuestion = ""
                             }
                         },
                         modifier = Modifier
