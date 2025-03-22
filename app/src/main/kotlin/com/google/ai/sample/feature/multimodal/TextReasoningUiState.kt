@@ -19,29 +19,29 @@ package com.google.ai.sample.feature.multimodal
 /**
  * A sealed hierarchy describing the state of the text generation.
  */
-sealed interface PhotoReasoningUiState {
+sealed interface TextReasoningUiState {
 
     /**
      * Empty state when the screen is first shown
      */
-    data object Initial: PhotoReasoningUiState
+    data object Initial: TextReasoningUiState
 
     /**
      * Still loading
      */
-    data object Loading: PhotoReasoningUiState
+    data object Loading: TextReasoningUiState
 
     /**
      * Text has been generated
      */
     data class Success(
         val outputText: String
-    ): PhotoReasoningUiState
+    ): TextReasoningUiState
 
     /**
      * There was an error generating text
      */
     data class Error(
         val errorMessage: String
-    ): PhotoReasoningUiState
+    ): TextReasoningUiState
 }

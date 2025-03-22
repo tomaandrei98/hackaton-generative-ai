@@ -71,8 +71,8 @@ import com.google.ai.sample.util.UriSaver
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun PhotoReasoningRoute(
-    viewModel: PhotoReasoningViewModel = viewModel(factory = GenerativeViewModelFactory)
+internal fun TextReasoningRoute(
+    viewModel: TextReasoningViewModel = viewModel(factory = GenerativeViewModelFactory)
 ) {
     val photoReasoningUiState by viewModel.uiState.collectAsState()
 
@@ -80,7 +80,7 @@ internal fun PhotoReasoningRoute(
     val imageRequestBuilder = ImageRequest.Builder(LocalContext.current)
     val imageLoader = ImageLoader.Builder(LocalContext.current).build()
 
-    PhotoReasoningScreen(
+    TextReasoningScreen(
         uiState = photoReasoningUiState,
         onReasonClicked = { inputText, selectedItems ->
             coroutineScope.launch {
@@ -109,8 +109,8 @@ internal fun PhotoReasoningRoute(
 }
 
 @Composable
-fun PhotoReasoningScreen(
-    uiState: PhotoReasoningUiState = PhotoReasoningUiState.Loading,
+fun TextReasoningScreen(
+    uiState: TextReasoningUiState = TextReasoningUiState.Loading,
     onReasonClicked: (String, List<Uri>) -> Unit = { _, _ -> }
 ) {
     var userQuestion by rememberSaveable { mutableStateOf("") }
@@ -186,11 +186,11 @@ fun PhotoReasoningScreen(
             }
         }
         when (uiState) {
-            PhotoReasoningUiState.Initial -> {
+            TextReasoningUiState.Initial -> {
                 // Nothing is shown
             }
 
-            PhotoReasoningUiState.Loading -> {
+            TextReasoningUiState.Loading -> {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
@@ -201,7 +201,7 @@ fun PhotoReasoningScreen(
                 }
             }
 
-            is PhotoReasoningUiState.Success -> {
+            is TextReasoningUiState.Success -> {
                 Card(
                     modifier = Modifier
                         .padding(vertical = 16.dp)
@@ -237,7 +237,7 @@ fun PhotoReasoningScreen(
                 }
             }
 
-            is PhotoReasoningUiState.Error -> {
+            is TextReasoningUiState.Error -> {
                 Card(
                     modifier = Modifier
                         .padding(vertical = 16.dp)
@@ -260,6 +260,6 @@ fun PhotoReasoningScreen(
 
 @Composable
 @Preview(showSystemUi = true)
-fun PhotoReasoningScreenPreview() {
-    PhotoReasoningScreen()
+fun TextReasoningScreenPreview() {
+    TextReasoningScreen()
 }
