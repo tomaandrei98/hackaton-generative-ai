@@ -31,7 +31,7 @@
 
     <!-- Photo Reasoning sample strings -->
     <string name="reason_label">Question</string>
-    <string name="reason_hint">Upload an image and then ask a question</string>
+    <string name="reason_hint">Tell your dream here</string>
     <string name="add_image">Add Image</string>
 
     <!-- Chat sample strings -->
