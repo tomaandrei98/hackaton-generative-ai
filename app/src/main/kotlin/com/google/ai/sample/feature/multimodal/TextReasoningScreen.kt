@@ -21,9 +21,13 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -55,8 +59,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -124,134 +131,161 @@ fun TextReasoningScreen(
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
-            .padding(all = 16.dp)
-            .verticalScroll(rememberScrollState())
+            .fillMaxSize() // Ensures the Box takes up the full screen
     ) {
-        Card(
-            modifier = Modifier.fillMaxWidth()
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.abstract_dream), // Replace with your image
+            contentDescription = "Background Image",
+            contentScale = ContentScale.Crop, // Ensures the image covers the whole screen
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize() // Make Column take the full screen
+//            .padding(all = 16.dp)
+//                .background(Color.Red)
+                .verticalScroll(rememberScrollState()) // Scrollable content inside
         ) {
-            Row(
-                modifier = Modifier.padding(top = 16.dp)
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.Transparent
+                ),
+                modifier = Modifier.fillMaxWidth() // Only fill width, no height constraint
             ) {
-                IconButton(
-                    onClick = {
-                        pickMedia.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    },
-                    modifier = Modifier
-                        .padding(all = 4.dp)
-                        .align(Alignment.CenterVertically)
+                Row(
+                    modifier = Modifier.padding(top = 30.dp)
                 ) {
-                    Icon(
-                        Icons.Rounded.Add,
-                        contentDescription = stringResource(R.string.add_image),
-                    )
-                }
-                OutlinedTextField(
-                    value = userQuestion,
-                    label = { Text(stringResource(R.string.reason_label)) },
-                    placeholder = { Text(stringResource(R.string.reason_hint)) },
-                    onValueChange = { userQuestion = it },
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                )
-                TextButton(
-                    onClick = {
-                        if (userQuestion.isNotBlank()) {
-                            onReasonClicked(userQuestion, imageUris.toList())
-                        }
-                    },
-                    modifier = Modifier
-                        .padding(all = 4.dp)
-                        .align(Alignment.CenterVertically)
-                ) {
-                    Text(stringResource(R.string.action_go))
-                }
-            }
-            LazyRow(
-                modifier = Modifier.padding(all = 8.dp)
-            ) {
-                items(imageUris) { imageUri ->
-                    AsyncImage(
-                        model = imageUri,
-                        contentDescription = null,
+//                    IconButton(
+//                        onClick = {
+//                            pickMedia.launch(
+//                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+//                            )
+//                        },
+//                        modifier = Modifier
+//                            .padding(all = 4.dp)
+//                            .align(Alignment.CenterVertically)
+//                    ) {
+//                        Icon(
+//                            Icons.Rounded.Add,
+//                            contentDescription = stringResource(R.string.add_image),
+//                        )
+//                    }
+                    OutlinedTextField(
+                        value = userQuestion,
+                        label = { Text(stringResource(R.string.reason_label)) },
+                        placeholder = { Text(stringResource(R.string.reason_hint)) },
+                        onValueChange = { userQuestion = it },
                         modifier = Modifier
-                            .padding(4.dp)
-                            .requiredSize(72.dp)
-                    )
-                }
-            }
-        }
-        when (uiState) {
-            TextReasoningUiState.Initial -> {
-                // Nothing is shown
-            }
+                            .fillMaxWidth(1f)
+                            .padding(all = 10.dp),
+                        textStyle = TextStyle(color = Color.White.copy(alpha = 0.85f))
 
-            TextReasoningUiState.Loading -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .padding(all = 8.dp)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is TextReasoningUiState.Success -> {
-                Card(
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
+
+                }
+                Row(
+//                    modifier = Modifier.padding(top = 50.dp)
                 ) {
-                    Row(
+                    TextButton(
+                        onClick = {
+                            if (userQuestion.isNotBlank()) {
+                                onReasonClicked(userQuestion, imageUris.toList())
+                            }
+                        },
                         modifier = Modifier
-                            .padding(all = 16.dp)
-                            .fillMaxWidth()
+                            .padding(all = 4.dp)
+                            .fillMaxWidth(1f)
+                            .align(Alignment.CenterVertically)
                     ) {
-                        Icon(
-                            Icons.Outlined.Person,
-                            contentDescription = "Person Icon",
-                            tint = MaterialTheme.colorScheme.onSecondary,
-                            modifier = Modifier
-                                .requiredSize(36.dp)
-                                .drawBehind {
-                                    drawCircle(color = Color.White)
-                                }
-                        )
-                        Text(
-                            text = uiState.outputText, // TODO(thatfiredev): Figure out Markdown support
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            modifier = Modifier
-                                .padding(start = 16.dp)
-                                .fillMaxWidth()
-                        )
+                        Text(stringResource(R.string.action_go))
                     }
                 }
+//                LazyRow(
+//                    modifier = Modifier.padding(all = 8.dp)
+//                ) {
+//                    items(imageUris) { imageUri ->
+//                        AsyncImage(
+//                            model = imageUri,
+//                            contentDescription = null,
+//                            modifier = Modifier
+//                                .padding(4.dp)
+//                                .requiredSize(72.dp)
+//                        )
+//                    }
+//                }
             }
+            when (uiState) {
+                TextReasoningUiState.Initial -> {
+                    // Nothing is shown
+                }
 
-            is TextReasoningUiState.Error -> {
-                Card(
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer
-                    )
-                ) {
-                    Text(
-                        text = uiState.errorMessage,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(all = 16.dp)
-                    )
+                TextReasoningUiState.Loading -> {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(all = 8.dp)
+                            .align(Alignment.CenterHorizontally)
+                    ) {
+//                        CircularProgressIndicator()
+                    }
+                }
+
+                is TextReasoningUiState.Success -> {
+                    Card(
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth(),
+                        shape = MaterialTheme.shapes.large,
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(all = 16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Icon(
+                                Icons.Outlined.Person,
+                                contentDescription = "Person Icon",
+                                tint = MaterialTheme.colorScheme.onSecondary,
+                                modifier = Modifier
+                                    .requiredSize(36.dp)
+                                    .drawBehind {
+                                        drawCircle(color = Color.White)
+                                    }
+                            )
+                            Text(
+                                text = uiState.outputText, // TODO(thatfiredev): Figure out Markdown support
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                modifier = Modifier
+                                    .padding(start = 16.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+
+                is TextReasoningUiState.Error -> {
+                    Card(
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth(),
+                        shape = MaterialTheme.shapes.large,
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer
+                        )
+                    ) {
+                        Text(
+                            text = uiState.errorMessage,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(all = 16.dp)
+                        )
+                    }
                 }
             }
         }
