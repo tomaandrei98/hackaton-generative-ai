@@ -43,7 +43,7 @@ fun MenuScreen(
     onItemClicked: (String) -> Unit = { }
 ) {
     val menuItems = listOf(
-        MenuItem("photo_reasoning", R.string.menu_reason_title, R.string.menu_reason_description),
+        MenuItem("text_reasoning", R.string.menu_reason_title, R.string.menu_reason_description),
     )
     LazyColumn(
         Modifier

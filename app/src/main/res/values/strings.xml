@@ -13,15 +13,15 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">Build With AI</string>
-    <string name="action_go">Go</string>
-    <string name="action_try">Try it</string>
+    <string name="app_name">Dream Vision</string>
+    <string name="action_go">INTERPRET</string>
+    <string name="action_try">ADD DREAM</string>
 
     <!-- Menu strings -->
     <string name="menu_summarize_title">Generate text from text-only input</string>
     <string name="menu_summarize_description">Sample app that summarizes text</string>
-    <string name="menu_reason_title">Generate text from text-and-image input (multimodal)</string>
-    <string name="menu_reason_description">Sample app for uploading images and asking about them</string>
+    <string name="menu_reason_title">Dreams list</string>
+    <string name="menu_reason_description">Your dreams</string>
     <string name="menu_chat_title">Build multi-turn conversations (chat)</string>
     <string name="menu_chat_description">Sample app demonstrating a conversational UI</string>
 
@@ -31,7 +31,7 @@
 
     <!-- Photo Reasoning sample strings -->
     <string name="reason_label">Question</string>
-    <string name="reason_hint">Upload an image and then ask a question</string>
+    <string name="reason_hint">Tell your dream here</string>
     <string name="add_image">Add Image</string>
 
     <!-- Chat sample strings -->
