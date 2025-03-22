@@ -72,19 +72,17 @@ class TextReasoningViewModel(
                 }
 
                 var outputContent = ""
-                var fullResponse = ""
 
                 generativeModel.generateContentStream(inputContent)
                     .collect { response ->
                         outputContent += response.text
-                        fullResponse += response.text
                         _uiState.value = TextReasoningUiState.Success(outputContent)
                     }
 
 
                 generativeModel.generateContentStream()
                 history.add("""
-                    Chat responded: $fullResponse
+                    Chat responded: $outputContent
                 """.trimIndent())
             } catch (e: Exception) {
                 _uiState.value = TextReasoningUiState.Error(e.localizedMessage ?: "")
