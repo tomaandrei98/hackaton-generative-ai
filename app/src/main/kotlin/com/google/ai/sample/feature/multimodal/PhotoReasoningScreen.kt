@@ -194,6 +194,7 @@ fun PhotoReasoningScreen(
                         onClick = {
                             if (userQuestion.isNotBlank()) {
                                 onReasonClicked(userQuestion, imageUris.toList())
+                                userQuestion = ""
                             }
                         },
                         modifier = Modifier
