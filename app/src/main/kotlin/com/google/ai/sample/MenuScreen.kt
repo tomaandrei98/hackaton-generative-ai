@@ -16,18 +16,25 @@
 
 package com.google.ai.sample
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,37 +52,53 @@ fun MenuScreen(
     val menuItems = listOf(
         MenuItem("text_reasoning", R.string.menu_reason_title, R.string.menu_reason_description),
     )
-    LazyColumn(
-        Modifier
-            .padding(top = 16.dp, bottom = 16.dp)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize() // Ensures the Box takes up the full screen
     ) {
-        items(menuItems) { menuItem ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            ) {
-                Column(
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.abstract_dream_1), // Replace with your image
+            contentDescription = "Background Image",
+            contentScale = ContentScale.Crop, // Ensures the image covers the whole screen
+            modifier = Modifier.fillMaxSize()
+        )
+        LazyColumn(
+            Modifier
+                .padding(top = 16.dp, bottom = 16.dp)
+        ) {
+            items(menuItems) { menuItem ->
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White.copy(alpha = 0.65f)
+                    ),
                     modifier = Modifier
-                        .padding(all = 16.dp)
                         .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Text(
-                        text = stringResource(menuItem.titleResId),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    Text(
-                        text = stringResource(menuItem.descriptionResId),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                    TextButton(
-                        onClick = {
-                            onItemClicked(menuItem.routeId)
-                        },
-                        modifier = Modifier.align(Alignment.End)
+                    Column(
+                        modifier = Modifier
+                            .padding(all = 16.dp)
+                            .fillMaxWidth()
                     ) {
-                        Text(text = stringResource(R.string.action_try))
+                        Text(
+                            text = stringResource(menuItem.titleResId),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = stringResource(menuItem.descriptionResId),
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                        TextButton(
+                            onClick = {
+                                onItemClicked(menuItem.routeId)
+                            },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Text(text = stringResource(R.string.action_try))
+                        }
                     }
                 }
             }

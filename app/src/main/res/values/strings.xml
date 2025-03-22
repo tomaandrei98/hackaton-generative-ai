@@ -14,7 +14,7 @@
 -->
 <resources>
     <string name="app_name">Dream Vision</string>
-    <string name="action_go">INTERPRET</string>
+    <string name="action_go">SEND</string>
     <string name="action_try">ADD DREAM</string>
 
     <!-- Menu strings -->
