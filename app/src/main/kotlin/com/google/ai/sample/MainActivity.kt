@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.ai.sample.feature.multimodal.PhotoReasoningRoute
+import com.google.ai.sample.feature.multimodal.AudioReasoningRoute // Import AudioReasoningRoute
 import com.google.ai.sample.ui.theme.GenerativeAISample
 
 class MainActivity : ComponentActivity() {
@@ -49,8 +50,11 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate(routeId)
                             })
                         }
-                        composable("photo_reasoning") {
-                            PhotoReasoningRoute()
+//                        composable("photo_reasoning") {
+//                            PhotoReasoningRoute()
+//                        }
+                        composable("audio_reasoning") { // Add this composable for audio_reasoning
+                            AudioReasoningRoute()
                         }
                     }
                 }

@@ -22,6 +22,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
 import com.google.ai.sample.feature.multimodal.PhotoReasoningViewModel
+import com.google.ai.sample.feature.multimodal.AudioReasoningViewModel
+
 
 val GenerativeViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(
@@ -35,7 +37,7 @@ val GenerativeViewModelFactory = object : ViewModelProvider.Factory {
         return with(viewModelClass) {
             when {
 
-                isAssignableFrom(PhotoReasoningViewModel::class.java) -> {
+                isAssignableFrom(AudioReasoningViewModel::class.java) -> {
                     // Initialize a GenerativeModel with the `gemini-flash` AI model
                     // for multimodal text generation
                    //TODO Initialize the model
@@ -46,7 +48,8 @@ val GenerativeViewModelFactory = object : ViewModelProvider.Factory {
                         generationConfig = config
                     )
 
-                    PhotoReasoningViewModel(generativeModel)
+                    AudioReasoningViewModel(generativeModel)
+                    //PhotoReasoningViewModel(generativeModel)
                 }
 
                 else ->
